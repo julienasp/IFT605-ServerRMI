@@ -1,6 +1,8 @@
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
+import core.Equation;
+
 
 public interface IRemoteEquation extends Remote {
 	/**
@@ -9,6 +11,6 @@ public interface IRemoteEquation extends Remote {
 	 * @return      y double
 	 * @param       s double         
 	 */
-	public double getEquation(String s) throws RemoteException;
+	public double getEquationValue(Equation e, double v) throws RemoteException;
 
 }
