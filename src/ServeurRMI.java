@@ -1,8 +1,16 @@
+import java.net.InetAddress;
+import java.rmi.Naming;
+import java.rmi.RMISecurityManager;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 
 public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8532723507508499007L;
 
 	protected ServeurRMI() throws RemoteException {
 		super();
@@ -14,7 +22,18 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
+		try {			
+			if (System.getSecurityManager() == null) {
+				System.setSecurityManager(new RMISecurityManager());			
+			}
+			ServeurRMI mServeur = new ServeurRMI();
+			String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/ServeurRMI";			
+			System.out.println("Enregistrement de l'objet avec l'url : " + url);			
+			Naming.rebind(url, mServeur);				
+			System.out.println("Serveur lancé");
+		} catch (Exception e) {			
+			System.out.println(e.getMessage());			
+		}
 	}
 
 	@Override
