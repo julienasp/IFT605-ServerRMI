@@ -1,7 +1,9 @@
+
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
 import core.Equation;
+
 
 
 public interface IRemoteEquation extends Remote {
