@@ -36,7 +36,9 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation {
 
 	@Override
 	public double getEquationValue(Equation e, double v) throws RemoteException{
-		return e.getFunctionValue(v);		
+		double t = e.getFunctionValue(v);
+		System.out.println("Serveur: la valeur de l'équation pour x=" + Double.toString(v) + " est: " + Double.toString(t));	
+		return t;		
 	}
 
 }
