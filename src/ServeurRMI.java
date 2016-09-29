@@ -1,6 +1,8 @@
 import java.net.InetAddress;
 import java.rmi.Naming;
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 
 import core.Equation;
@@ -22,15 +24,13 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		if (System.getSecurityManager() == null) {			
-			System.setSecurityManager(new SecurityManager());			
-		}
+		// TODO Auto-generated method stub		
 		try {			
-			ServeurRMI mServeur = new ServeurRMI();
-			String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/ServeurRMI";			
+			ServeurRMI mServeur = new ServeurRMI();			
+			String url = "rmi://localhost/ServeurRMI";
+			Naming.rebind(url, mServeur);
 			System.out.println("Enregistrement de l'objet avec l'url : " + url);			
-			Naming.rebind(url, mServeur);				
+			
 			System.out.println("Serveur lancé");
 		} catch (Exception e) {			
 			System.out.println(e.getMessage());			
