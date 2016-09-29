@@ -23,6 +23,9 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation {
 	 */
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		if (System.getSecurityManager() == null) {			
+			System.setSecurityManager(new SecurityManager());			
+		}
 		try {			
 			ServeurRMI mServeur = new ServeurRMI();
 			String url = "rmi://" + InetAddress.getLocalHost().getHostAddress() + "/ServeurRMI";			
