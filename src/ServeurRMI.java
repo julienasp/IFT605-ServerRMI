@@ -90,8 +90,8 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 
 	public void interruptThread(AdminToken at, int s) throws RemoteException {
 		// TODO Auto-generated method stub
-		if(this.at.isPrivateKeyOK(at)){			
-			vFuture.get(s).cancel(true);
+		if(this.at.isPrivateKeyOK(at)){
+			if(vFuture.size() > s) vFuture.get(s).cancel(true);
 		}
 		System.out.println("Serveur: le AdminToken reçu du client est invalide. La méthode ne sera pas exécuté.");		
 	}
