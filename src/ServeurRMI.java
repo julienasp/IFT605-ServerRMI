@@ -43,7 +43,6 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation, 
 		}
 	}
 
-	@Override
 	public double getEquationValue(Equation e, double v) throws RemoteException{
 		double t = e.getFunctionValue(v);
 		System.out.println("Serveur: la valeur de l'équation pour x=" + Double.toString(v) + " est: " + Double.toString(t));	
@@ -51,7 +50,6 @@ public class ServeurRMI extends UnicastRemoteObject implements IRemoteEquation, 
 		return t;		
 	}
 
-	@Override
 	public void interruptThread(AdminToken at, String t) throws RemoteException {
 		// TODO Auto-generated method stub
 		if(this.at.isPrivateKeyOK(at)){			
