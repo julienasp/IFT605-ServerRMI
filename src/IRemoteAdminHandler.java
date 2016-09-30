@@ -10,5 +10,5 @@ public interface IRemoteAdminHandler extends Remote {
 	 * @return      y double
 	 * @param       at AdminToken, t String         
 	 */
-	public void interruptThread(AdminToken at, String t) throws RemoteException;
+	public void interruptThread(AdminToken at, int i) throws RemoteException;
 }

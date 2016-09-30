@@ -4,6 +4,12 @@ import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Vector;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import core.AdminToken;
 import core.Equation;
@@ -11,6 +17,8 @@ import core.Equation;
 
 public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 	private AdminToken at = null;
+	private ExecutorService executor = Executors.newCachedThreadPool();
+	private Vector<Future<Double>> vFuture = new Vector<Future<Double>>();
 	/**
 	 * 
 	 */
@@ -54,17 +62,36 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		}
 	}
 
-	public double getEquationValue(Equation e, double v) throws RemoteException{
-		double t = e.getFunctionValue(v);
-		System.out.println("Serveur: la valeur de l'équation pour x=" + Double.toString(v) + " est: " + Double.toString(t));	
-		System.out.println(Thread.getAllStackTraces().toString());
-		return t;		
+	public double getEquationValue(final Equation e, final double v) throws RemoteException{
+		e.printUserReadable();
+		System.out.println("Serveur: dans getEquationValue pour l'équation ci-dessus");
+		Future<Double> f = executor.submit(
+		      new Callable<Double>() {
+		          public Double call() throws InterruptedException, ExecutionException {
+		        	  e.printUserReadable();
+		        	  System.out.println("Serveur: dans call() pour pour l'équation ci-dessus");
+		        	  return e.getFunctionValue(v);
+		          }
+		      });
+		
+		vFuture.add(f);		
+		Double t;		
+		try {
+			t = f.get();
+			vFuture.remove(f);
+			System.out.println("Serveur: la valeur de l'équation pour x=" + Double.toString(v) + " est: " + Double.toString(t));	
+			return t;		
+		} catch (Exception ex) {
+			// TODO Auto-generated catch block
+			ex.printStackTrace();
+			return -1;
+		}
 	}
 
-	public void interruptThread(AdminToken at, String t) throws RemoteException {
+	public void interruptThread(AdminToken at, int s) throws RemoteException {
 		// TODO Auto-generated method stub
 		if(this.at.isPrivateKeyOK(at)){			
-			
+			vFuture.get(s).cancel(true);
 		}
 		System.out.println("Serveur: le AdminToken reçu est invalide.");		
 	}
