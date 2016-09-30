@@ -1,6 +1,8 @@
 package core;
 
-public class AdminToken {
+import java.io.Serializable;
+
+public class AdminToken  implements Serializable {
 	private String secretPrivateKey;
 
 	public AdminToken(String secretPrivateKey) {
