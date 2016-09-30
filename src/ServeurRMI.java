@@ -91,8 +91,12 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 	public void interruptThread(AdminToken at, int s) throws RemoteException {
 		// TODO Auto-generated method stub
 		if(this.at.isPrivateKeyOK(at)){
-			if(vFuture.size() > s) vFuture.get(s).cancel(true);
+			if(vFuture.size() > s){
+				vFuture.get(s).cancel(true); 
+				System.out.println("Serveur: le thread à bien été arrêter");
+			}
+			else System.out.println("Serveur: le AdminToken reçu du client est valide. Par contre, le thread n'existe plus ou bien l'index est mauvais.");
 		}
-		System.out.println("Serveur: le AdminToken reçu du client est invalide. La méthode ne sera pas exécuté.");		
+		else System.out.println("Serveur: le AdminToken reçu du client est invalide. La méthode ne sera pas exécuté.");		
 	}
 }
