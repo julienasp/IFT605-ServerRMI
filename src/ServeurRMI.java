@@ -93,6 +93,6 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		if(this.at.isPrivateKeyOK(at)){			
 			vFuture.get(s).cancel(true);
 		}
-		System.out.println("Serveur: le AdminToken reçu est invalide.");		
+		System.out.println("Serveur: le AdminToken reçu est invalide. Vous n'avez pas le droit à cette méthode.");		
 	}
 }
