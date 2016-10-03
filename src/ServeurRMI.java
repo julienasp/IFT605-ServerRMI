@@ -1,5 +1,3 @@
-
-import java.rmi.Naming;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -21,8 +19,7 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 	private Vector<Future<Double>> vFuture = new Vector<Future<Double>>();
 	/**
 	 * 
-	 */
-	private static final long serialVersionUID = 8532723507508499007L;
+	 */	
 
 	protected ServeurRMI() throws RemoteException {
 		super();
@@ -40,7 +37,10 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub		
+		// TODO Auto-generated method stub
+		if (System.getSecurityManager() == null) {			
+			System.setSecurityManager(new SecurityManager());			
+		}
 		try {
 			String stubName = "ServeurRMI";
 			AdminToken at = new AdminToken("rtCCTYgeUV&aP5w?");

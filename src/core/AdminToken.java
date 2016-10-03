@@ -3,6 +3,10 @@ package core;
 import java.io.Serializable;
 
 public class AdminToken  implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1740090784298155097L;
 	private String secretPrivateKey;
 
 	public AdminToken(String secretPrivateKey) {
