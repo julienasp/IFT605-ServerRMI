@@ -48,7 +48,6 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 			ServeurRMI mServeur = new ServeurRMI(at);		
 			
 		 	IRemoteEquation stub = (IRemoteEquation) UnicastRemoteObject.exportObject(mServeur, 0);
-			Registry registry = LocateRegistry.getRegistry("localhost");
         	registry.rebind(stubName, stub);	 
 			
 			System.out.println("Enregistrement de l'objet avec le nom suivant : " + stubName);

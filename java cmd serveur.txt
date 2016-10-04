@@ -1,0 +1,1 @@
+java -Djava.security.policy=C:\Users\JUASP-G73-Android\Documents\GitHub\IFT605-ServerRMI\security.policy "-Djava.rmi.server.codebase=file:/C:/Users/JUASP-G73-Android/Documents/GitHub/IFT605-ServerRMI/bin/ http://localhost:8081/IFT605-WebServerRMI/bin/" -Dfile.encoding=Cp1252 -classpath C:\Users\JUASP-G73-Android\Documents\GitHub\IFT605-ServerRMI\bin ServeurRMI
