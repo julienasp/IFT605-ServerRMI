@@ -4,6 +4,7 @@ import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Vector;
 import java.util.concurrent.Callable;
+import java.util.concurrent.CancellationException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -65,8 +66,9 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		      new Callable<Double>() {
 		          public Double call() throws InterruptedException, ExecutionException {
 		        	  e.printUserReadable();
-		        	  Thread.currentThread();
-		        	  Thread.sleep(60000);
+		        	  // Pour TEST EN LIVE
+		        	  //Thread.currentThread();
+		        	  //Thread.sleep(60000);
 		        	  System.out.println("Serveur: dans call() pour pour l'équation ci-dessus");
 		        	  return e.getFunctionValue(v);
 		          }
@@ -79,7 +81,11 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 			vFuture.remove(f);
 			System.out.println("Serveur: la valeur de l'équation pour x=" + Double.toString(v) + " est: " + Double.toString(t));	
 			return t;		
-		} catch (Exception ex) {
+		} catch (CancellationException ce){
+			//Nothing to show
+			System.out.println("Serveur: le resultat de .get() est indisponible, car la future qui s'y rattache a été annulée.");
+			return -1;
+		}catch (Exception ex) {
 			// TODO Auto-generated catch block
 			ex.printStackTrace();
 			return -1;
