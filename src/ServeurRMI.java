@@ -44,15 +44,11 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		try {
 			String stubName = "ServeurRMI";
 			AdminToken at = new AdminToken("rtCCTYgeUV&aP5w?");
-			ServeurRMI mServeur = new ServeurRMI(at);			
-			/*String url = "rmi://localhost/" + stubName;
-			Naming.rebind(url, mServeur);
-			System.out.println("Enregistrement de l'objet avec l'url : " + url);*/
+			ServeurRMI mServeur = new ServeurRMI(at);		
 			
-			
-			 	IRemoteEquation stub = (IRemoteEquation) UnicastRemoteObject.exportObject(mServeur, 0);
-				Registry registry = LocateRegistry.getRegistry("localhost");
-            	registry.rebind(stubName, stub);	 
+		 	IRemoteEquation stub = (IRemoteEquation) UnicastRemoteObject.exportObject(mServeur, 0);
+			Registry registry = LocateRegistry.getRegistry("localhost");
+        	registry.rebind(stubName, stub);	 
 			
 			System.out.println("Enregistrement de l'objet avec le nom suivant : " + stubName);
 			System.out.println("Serveur lancé...");
@@ -69,6 +65,8 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		      new Callable<Double>() {
 		          public Double call() throws InterruptedException, ExecutionException {
 		        	  e.printUserReadable();
+		        	  Thread.currentThread();
+		        	  Thread.sleep(60000);
 		        	  System.out.println("Serveur: dans call() pour pour l'équation ci-dessus");
 		        	  return e.getFunctionValue(v);
 		          }
@@ -92,8 +90,13 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		// TODO Auto-generated method stub
 		if(this.at.isPrivateKeyOK(at)){
 			if(vFuture.size() > s){
-				vFuture.get(s).cancel(true); 
-				System.out.println("Serveur: le thread à bien été arrêter");
+				try{
+					vFuture.get(s).cancel(true); 
+				}catch(Exception e){
+					//Nothing to show
+				}finally{
+					System.out.println("Serveur: le thread à bien été arrêter");
+				}	
 			}
 			else System.out.println("Serveur: le AdminToken reçu du client est valide. Par contre, le thread n'existe plus ou bien l'index est mauvais.");
 		}
