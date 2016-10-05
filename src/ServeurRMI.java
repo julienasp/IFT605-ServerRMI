@@ -45,7 +45,9 @@ public class ServeurRMI implements IRemoteEquation, IRemoteAdminHandler {
 		try {
 			String stubName = "ServeurRMI";
 			AdminToken at = new AdminToken("rtCCTYgeUV&aP5w?");
-			ServeurRMI mServeur = new ServeurRMI(at);		
+			ServeurRMI mServeur = new ServeurRMI(at);	
+			
+			LocateRegistry.createRegistry(1099);
 			
 		 	IRemoteEquation stub = (IRemoteEquation) UnicastRemoteObject.exportObject(mServeur, 0);
 		 	Registry registry = LocateRegistry.getRegistry("localhost");
